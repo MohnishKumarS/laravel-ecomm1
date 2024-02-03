@@ -44,6 +44,7 @@ section {
     background-color: #f6f6f6;
 }
 .our-category{
+    
     background-color: #ffd68a;
     box-shadow: 0px 0 80px 128px #ffd68a;
     padding-bottom: 150px;
@@ -122,7 +123,7 @@ section {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
-    height: 75px;
+    height: 74px;
 }
 
 
