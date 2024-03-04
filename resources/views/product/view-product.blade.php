@@ -196,7 +196,7 @@
                         <div class="row ">
                             <div class="col-lg-6 ">
                                 <div>
-                                    <div class="d-xl-none">
+                                    <div class="">
                                         <div class="big-img">
                                             <img src="{{ asset('image/product/' . $img[0]) }}" alt="shirtinc-products"
                                                 class="img-fluid" loading="lazy">
@@ -241,7 +241,7 @@
                                         }
                                     </style>
                                     {{-- ---- images --- --}}
-                                    <div class="exzoom d-none d-xl-block" id="exzoom">
+                                    <div class="exzoom d-none d-none" id="exzoom">
                                         <!-- Images -->
                                         <div class="exzoom_img_box">
                                             <ul class='exzoom_img_ul'>
@@ -344,6 +344,7 @@
 
                                     <div>
                                         @php
+                                            $colors = $product->colors ? json_decode($product->colors) : '';
                                             $size = json_decode($product->size_list);
                                             $men_size = $product->couple_men_size ? json_decode($product->couple_men_size) : '';
                                             $women_size = $product->couple_women_size ? json_decode($product->couple_women_size) : '';
@@ -398,6 +399,40 @@
                                         <div class="error text-danger"></div>
 
                                     </div>
+
+                                    {{-- --- ----- colors --------- --}}
+                                    
+                                    <div>
+                                        <label for="" class="spd-label-title">colors*</label>
+                                        <input type="hidden" class="product_id" value="{{ $product['id'] }}">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-4 col-sm-6">
+
+                                                <select class="form-select" id="colors" required>
+                                                    <option selected value="">Choose your colors</option>
+                                                    {{-- ---- size get in database --- --}}
+                                                    @foreach ($colors as $key => $val)
+                                                        <option value="{{ $key }}">{{ $val }}
+                                                        </option>
+                                                    @endforeach
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        $getImg = {!! json_encode($img) !!};
+                                        console.log($getImg);
+                                        $color = document.getElementById('colors');
+                                        $color.addEventListener('change', function() {
+                                            $getColor = $color.value;
+                                            $('.big-img img').attr('src','../../image/product/'+$getImg[$getColor])
+                                        })
+                                    </script>
+
+                                    {{-- --------- quantity ------------ --}}
                                     <div>
                                         <label for="" class="spd-label-title">quantity*</label>
                                         <input type="hidden" class="product_id" value="{{ $product['id'] }}">

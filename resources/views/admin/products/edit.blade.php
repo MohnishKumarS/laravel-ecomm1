@@ -106,6 +106,10 @@
                     <input type="file" class="form-control" name="images[]" multiple>
                 </div>
                 <div class="col-md-6 mb-3">
+                    <label for="" class="form-label">Colors</label>
+                    <input type="text" class="form-control" value="" name="colors">
+                </div>
+                <div class="col-md-6 mb-3">
                     <label for="" class="form-label">Quantity</label>
                     <input type="number" class="form-control" value="{{$data->quantity}}" name="quantity" required>
                 </div>

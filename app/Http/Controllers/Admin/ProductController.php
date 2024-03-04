@@ -52,9 +52,9 @@ class ProductController extends Controller
         // return $req->file('image')[1];
 
         if ($files = $req->file('images')) {
-            foreach ($files as $file) {
+            foreach ($files as $key=> $file) {
                 $ext = \strtolower($file->getClientOriginalExtension());
-                $img_name =  rand(100, 100000) . '.' . $ext;
+                $img_name =  'image_' . $key . '_' .  rand(100, 100000) . '.' . $ext;
                 $destinate = \public_path('image/product');
                 $file->move($destinate, $img_name);
 
@@ -76,6 +76,7 @@ class ProductController extends Controller
             'original_price' => $req->original_p,
             'selling_price' => $req->selling_p,
             'image' => \implode(',', $image),
+            'colors' =>  $req->colors ? json_encode(explode(",",$req->colors)): null,
             'quantity' => $req->quantity,
             'type' => $req->product_type,
             'size_list' => \json_encode($req->size),
@@ -108,7 +109,7 @@ class ProductController extends Controller
 
     public function update_product(Request $req, $id)
     {
-        $pro = Product::find($id);
+        $pro = Product::findOrFail($id);
         // return $pro;
         $req->validate([
             'size' => 'required',
@@ -126,9 +127,9 @@ class ProductController extends Controller
 
             // ---------- insert a new image ------
             if ($files = $req->file('images')) {
-                foreach ($files as $file) {
+                foreach ($files as $key => $file) {
                     $ext = \strtolower($file->getClientOriginalExtension());
-                    $img_name =  rand(100, 100000) . '.' . $ext;
+                    $img_name =  'image_' . $key . '_' .  rand(100, 100000) . '.' . $ext;
                     $destinate = \public_path('image/product');
                     $file->move($destinate, $img_name);
 
@@ -153,6 +154,7 @@ class ProductController extends Controller
         $pro->original_price = $req->original_p;
         $pro->selling_price = $req->selling_p;
         $pro->quantity = $req->quantity;
+        $pro->colors = $req->colors? json_encode(explode(",",$req->colors)) : null;
         $pro->type = $req->product_type;
         $pro->size_list = \json_encode($req->size);
         $pro->couple_men_size = $req->men_size ? \json_encode($req->men_size) : null;
